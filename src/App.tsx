@@ -5,10 +5,10 @@ import * as D from "./data";
 import { useInterval } from "./hooks/useInterval";
 
 function App() {
-  const minuteMarks = useMemo(
-    () => new Array(48).fill(null).map(() => <li></li>),
-    []
-  );
+  // const minuteMarks = useMemo(
+  //   () => new Array(48).fill(null).map(() => <li></li>),
+  //   []
+  // );
 
   const digits = new Array(12)
     .fill(null)
@@ -18,21 +18,9 @@ function App() {
   const [minutesHandsRotate, setMinutesHandsRotate] = useState<number>(0);
   const [hourHandsRotate, setHourHandsRotate] = useState<number>(0);
 
-  const increaseRotateOnclick = useCallback(() => {
-    const localSecond: number = D.getSecond();
-    const rotate = localSecond * 6;
-    setSecondsHandsRotate(rotate);
-
-    const localMinite = D.getMinute();
-    const rotateM = localMinite * 6 + Math.floor(localSecond / 10);
-    setMinutesHandsRotate(rotateM);
-
-    // alert(Math.floor(localSecond / 10));
-
-    const localHour = D.getHour();
-    const rotateH = localHour * 30;
-    setHourHandsRotate(rotateH);
-  }, []);
+  const [hour, setHour] = useState<number>(0);
+  const [minute, setMinute] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(0);
 
   useInterval(() => {
     const localSecond = D.getSecond();
@@ -46,13 +34,21 @@ function App() {
     const localHour = D.getHour();
     const rotateH = localHour * 30 + (localMinite / 3) * 1.5;
     setHourHandsRotate(rotateH);
-  });
+
+    setHour(localHour);
+    setMinute(localMinite);
+    setSeconds(localSecond);
+  }, 1000);
 
   return (
     <div>
       <div id="watch">
         <div className="frame-face"></div>
-        <ul className="minute-marks">{minuteMarks}</ul>
+        <div className="digital-wrap">
+          <ul className="digit-hours">{hour}</ul>
+          <ul className="digit-minutes">{minute}</ul>
+          <ul className="digit-seconds">{seconds}</ul>
+        </div>
         <ul className="digits">{digits}</ul>
         <div
           className="hours-hand"
@@ -66,9 +62,6 @@ function App() {
           className="seconds-hand"
           style={{ transform: "rotate(" + secondsHandsRotate + "deg)" }}
         ></div>
-      </div>
-      <div>
-        <button onClick={increaseRotateOnclick}>increaseRotate</button>
       </div>
     </div>
   );

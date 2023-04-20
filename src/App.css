@@ -441,7 +441,7 @@ ul {
 } */
 #watch .digital-wrap {
   width: 9em;
-  height: 3em;
+  height: 4em;
   border: 0.1em solid #222;
   border-radius: 0.2em;
   position: absolute;
@@ -455,11 +455,15 @@ ul {
   background: -ms-linear-gradient(top, #4c4c4c 0%, #0f0f0f 100%);
   background: -o-linear-gradient(top, #4c4c4c 0%, #0f0f0f 100%);
   background: linear-gradient(to bottom, #4c4c4c 0%, #0f0f0f 100%);
+  z-index: 2;
+  opacity: 60%;
+  text-align: center;
+  padding-top: 1em;
 }
 #watch .digital-wrap ul {
   float: left;
   width: 2.85em;
-  height: 3em;
+  height: 4em;
   border-right: 0.1em solid #000;
   color: #ddd;
   font-family: Consolas, monaco, monospace;
